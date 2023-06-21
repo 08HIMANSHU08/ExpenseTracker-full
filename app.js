@@ -61,10 +61,10 @@ app.use('/password',passwardRoutes);
 
 app.use(errorController.get404)
 
-// app.use((req,res)=>{
-//     // console.log(req.url);
-//     res.sendFile(path.join(__dirname,`public/${req.url}`));
-// })
+app.use((req,res)=>{
+    // console.log(req.url);
+    res.sendFile(path.join(__dirname,`public/${req.url}`));
+})
 
 SignUp.hasMany(Expense);
 Expense.belongsTo(SignUp);
