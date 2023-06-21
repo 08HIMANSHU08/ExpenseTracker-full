@@ -23,7 +23,7 @@ document.getElementById("submitform").onclick= function(e){
     desc
   };
   
-  axios.post("http://localhost:3000/expense/add-expense",inputData,{headers:{"Authorization":token}})
+  axios.post("http://65.0.135.84:3000/expense/add-expense",inputData,{headers:{"Authorization":token}})
     .then((response)=>{
       console.log(response);
       showuser(response.data.newExpense);
@@ -52,7 +52,7 @@ function showPremiumFeature(){
 }
 
 function download(){
-  axios.get('http://localhost:3000/user/download', { headers: {"Authorization" : token} })
+  axios.get('http://65.0.135.84:3000/user/download', { headers: {"Authorization" : token} })
   .then((response) => {
     console.log(response.data.urls)
       showUrls(response.data.urls);
@@ -86,7 +86,7 @@ function showleaderBoard(){
   document.getElementById('premium').appendChild(leaderBoard)
   leaderBoard.onclick= async function(e){
     e.preventDefault();
-    const userLeaderBoardArray = await axios.get('http://localhost:3000/premium/show-leaderboard',{headers:{"Authorization":token}})
+    const userLeaderBoardArray = await axios.get('http://65.0.135.84:3000/premium/show-leaderboard',{headers:{"Authorization":token}})
     console.log(userLeaderBoardArray);
     let leaderBoardElement = document.getElementById('leaderboardlist');
     leaderBoardElement.innerHTML+="<h3>Leader Board</h3>";
@@ -108,7 +108,7 @@ function showleaderBoard(){
     document.getElementById("downloadexpense").style.visibility="hidden";
   }
   let row=(rows==0) ? 3: rows;
-  axios.get(`http://localhost:3000/expense/get-expense/page=${page}/rows=${row}`,{headers:{"Authorization":token}})
+  axios.get(`http://65.0.135.84:3000/expense/get-expense/page=${page}/rows=${row}`,{headers:{"Authorization":token}})
     .then((response)=>{
       showlists(response.data.allExpense);
       showPagination(response.data);
@@ -149,7 +149,7 @@ function showPagination({
 }
 
 function getExpense(page){
-  axios.get(`http://localhost:3000/expense/get-expense/page=${page}/rows=${rows}`,{headers:{"Authorization":token}})
+  axios.get(`http://65.0.135.84:3000/expense/get-expense/page=${page}/rows=${rows}`,{headers:{"Authorization":token}})
   .then((response)=>{
     showlists(response.data.allExpense);
     showPagination(response.data);
@@ -173,7 +173,7 @@ function showlists(object){
     
     deleteitem.onclick=()=>{
     const token = localStorage.getItem('token');
-    axios.delete(`http://localhost:3000/expense/delete-expense/${object[i].id}`,{headers:{"Authorization":token}})
+    axios.delete(`http://65.0.135.84:3000/expense/delete-expense/${object[i].id}`,{headers:{"Authorization":token}})
     .then((response)=>{
         console.log(response);
     })
@@ -202,7 +202,7 @@ function showuser(object){
     
     deleteitem.onclick=()=>{
     const token = localStorage.getItem('token');
-    axios.delete(`http://localhost:3000/expense/delete-expense/${object[i].id}`,{headers:{"Authorization":token}})
+    axios.delete(`http://65.0.135.84:3000/expense/delete-expense/${object[i].id}`,{headers:{"Authorization":token}})
     .then((response)=>{
         console.log(response);
     })
@@ -218,14 +218,14 @@ function showuser(object){
 
 document.getElementById("razorpayBuy").onclick= async function(e){
   e.preventDefault();
-  await axios.get("http://localhost:3000/purchase/buypremiummembership",{headers:{"Authorization":token}})
+  await axios.get("http://65.0.135.84:3000/purchase/buypremiummembership",{headers:{"Authorization":token}})
   .then((response)=>{
     console.log("res",response);
       var options={
       "key":response.data.key_id,
       "order_id":response.data.order.id,
       "handler":async function(response){
-        const res=await axios.post("http://localhost:3000/purchase/updatetransactionstatus",{
+        const res=await axios.post("http://65.0.135.84:3000/purchase/updatetransactionstatus",{
           order_id:options.order_id,
           payment_id:response.razorpay_payment_id,
         },{headers:{"Authorization":token}})
