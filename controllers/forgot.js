@@ -8,7 +8,6 @@ const apiKey = client.authentications['api-key'];
 require('dotenv').config();
 apiKey.apiKey =process.env.SENDMAIL_KEY;
 
-
 const uuid = uuidv4();
 const tranEmailApi = new Sib.TransactionalEmailsApi();
    
