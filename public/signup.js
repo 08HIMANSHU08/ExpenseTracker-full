@@ -16,7 +16,7 @@ const myForm = document.querySelector('#my-form');
             passward,
           };
           console.log(inputData);
-          axios.post("http://65.0.135.84:3000/user/signup",inputData)
+          axios.post("http://52.201.212.242:3000/user/signup",inputData)
             .then((response)=>{
               console.log(response)
               if(response.request.status==201){

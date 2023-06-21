@@ -10,7 +10,7 @@ function onSubmit(e){
     email
   }
   console.log(inputData)
-  axios.post("http://65.0.135.84:3000/password/forgotpassword",inputData)
+  axios.post("http://52.201.212.242:3000/password/forgotpassword",inputData)
     .then((response)=>{
         console.log(response);
         window.location.href = "./login.html";

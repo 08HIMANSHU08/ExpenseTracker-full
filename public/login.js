@@ -13,7 +13,7 @@
             passward,
           };
           console.log(inputData);
-          axios.post("http://65.0.135.84:3000/user/login",inputData)
+          axios.post("http://52.201.212.242:3000/user/login",inputData)
             .then((response)=>{
                 console.log(response);
               if(response.status==200){
