@@ -49,6 +49,7 @@ app.use('/password',passwardRoutes);
 
 app.use((req,res)=>{
     console.log(req.url);
+    console.log("hello automation");
     res.sendFile(path.join(__dirname,`${req.url}`));
 })
 
