@@ -29,7 +29,7 @@ const tranEmailApi = new Sib.TransactionalEmailsApi();
                         sender,
                         to:receivers,
                         subject:'Reset Your Passward',
-                        TextContent: `http://52.201.212.242:3000/password/resetpassword/${uuid}`
+                        TextContent: `http://3.93.178.101:3000/password/resetpassword/${uuid}`
                     })
                     .then(console.log("a"))
                     .catch(console.log("b"));
