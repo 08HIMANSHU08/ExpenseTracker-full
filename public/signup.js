@@ -16,10 +16,11 @@ const myForm = document.querySelector('#my-form');
             passward,
           };
           console.log(inputData);
-          axios.post("http://52.201.212.242:3000/user/signup",inputData)
+          axios.post("http://3.93.178.101:3000/user/signup",inputData)
             .then((response)=>{
               console.log(response)
               if(response.request.status==201){
+                alert(response.data.message);
                 window.location.href="./login.html";
               }
             })

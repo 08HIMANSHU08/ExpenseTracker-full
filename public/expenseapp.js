@@ -23,7 +23,7 @@ document.getElementById("submitform").onclick= function(e){
     desc
   };
   
-  axios.post("http://52.201.212.242:3000/expense/add-expense",inputData,{headers:{"Authorization":token}})
+  axios.post("http://3.93.178.101:3000/expense/add-expense",inputData,{headers:{"Authorization":token}})
     .then((response)=>{
       console.log(response);
       showuser(response.data.newExpense);
@@ -49,10 +49,16 @@ function parseJwt (token) {
 function showPremiumFeature(){
   document.getElementById("razorpayBuy").style.visibility="hidden";
   document.getElementById("message").innerHTML="Premium User";
+  const downloadBtn = document.createElement("input");
+  downloadBtn.className="btn btn-warning btn-sm btn-outline-dark float-end m-2";
+  downloadBtn.type= "button";
+  downloadBtn.value="Download ";
+  downloadBtn.onclick = function(){download()};
+  document.getElementById('premium').appendChild(downloadBtn)
 }
 
 function download(){
-  axios.get('http://52.201.212.242:3000/user/download', { headers: {"Authorization" : token} })
+  axios.get('http://3.93.178.101:3000/user/download', { headers: {"Authorization" : token} })
   .then((response) => {
     console.log(response.data.urls)
       showUrls(response.data.urls);
@@ -86,7 +92,7 @@ function showleaderBoard(){
   document.getElementById('premium').appendChild(leaderBoard)
   leaderBoard.onclick= async function(e){
     e.preventDefault();
-    const userLeaderBoardArray = await axios.get('http://52.201.212.242:3000/premium/show-leaderboard',{headers:{"Authorization":token}})
+    const userLeaderBoardArray = await axios.get('http://3.93.178.101:3000/premium/show-leaderboard',{headers:{"Authorization":token}})
     console.log(userLeaderBoardArray);
     let leaderBoardElement = document.getElementById('leaderboardlist');
     leaderBoardElement.innerHTML+="<h3>Leader Board</h3>";
@@ -104,11 +110,9 @@ function showleaderBoard(){
   {
     showPremiumFeature();
     showleaderBoard();
-  }else{
-    document.getElementById("downloadexpense").style.visibility="hidden";
   }
   let row=(rows==0) ? 3: rows;
-  axios.get(`http://52.201.212.242:3000/expense/get-expense/page=${page}/rows=${row}`,{headers:{"Authorization":token}})
+  axios.get(`http://3.93.178.101:3000/expense/get-expense/page=${page}/rows=${row}`,{headers:{"Authorization":token}})
     .then((response)=>{
       showlists(response.data.allExpense);
       showPagination(response.data);
@@ -149,7 +153,7 @@ function showPagination({
 }
 
 function getExpense(page){
-  axios.get(`http://52.201.212.242:3000/expense/get-expense/page=${page}/rows=${rows}`,{headers:{"Authorization":token}})
+  axios.get(`http://3.93.178.101:3000/expense/get-expense/page=${page}/rows=${rows}`,{headers:{"Authorization":token}})
   .then((response)=>{
     showlists(response.data.allExpense);
     showPagination(response.data);
@@ -173,7 +177,7 @@ function showlists(object){
     
     deleteitem.onclick=()=>{
     const token = localStorage.getItem('token');
-    axios.delete(`http://52.201.212.242:3000/expense/delete-expense/${object[i].id}`,{headers:{"Authorization":token}})
+    axios.delete(`http://3.93.178.101:3000/expense/delete-expense/${object[i].id}`,{headers:{"Authorization":token}})
     .then((response)=>{
         console.log(response);
     })
@@ -202,7 +206,7 @@ function showuser(object){
     
     deleteitem.onclick=()=>{
     const token = localStorage.getItem('token');
-    axios.delete(`http://52.201.212.242:3000/expense/delete-expense/${object[i].id}`,{headers:{"Authorization":token}})
+    axios.delete(`http://3.93.178.101:3000/expense/delete-expense/${object[i].id}`,{headers:{"Authorization":token}})
     .then((response)=>{
         console.log(response);
     })
@@ -218,14 +222,14 @@ function showuser(object){
 
 document.getElementById("razorpayBuy").onclick= async function(e){
   e.preventDefault();
-  await axios.get("http://52.201.212.242:3000/purchase/buypremiummembership",{headers:{"Authorization":token}})
+  await axios.get("http://3.93.178.101:3000/purchase/buypremiummembership",{headers:{"Authorization":token}})
   .then((response)=>{
     console.log("res",response);
       var options={
       "key":response.data.key_id,
       "order_id":response.data.order.id,
       "handler":async function(response){
-        const res=await axios.post("http://52.201.212.242:3000/purchase/updatetransactionstatus",{
+        const res=await axios.post("http://3.93.178.101:3000/purchase/updatetransactionstatus",{
           order_id:options.order_id,
           payment_id:response.razorpay_payment_id,
         },{headers:{"Authorization":token}})
